@@ -1,0 +1,6 @@
+urllib3==1.25.7
+beautifulsoup4==4.8.2
+google-api-python-client==1.7.11
+google-auth==1.10.0
+google-auth-httplib2==0.0.3
+google-auth-oauthlib==0.4.1
