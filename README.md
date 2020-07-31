@@ -3,9 +3,9 @@
 ImageURLScraper is a multi-site image scraper. It automatically detects which site the image is coming from and scrapes it. Only relevant images are scraped from the site and shortened links are automatically unshortened. In the case that you have many links that need to be processed, these links can be distinguished by IDs when requesting the image links.
 
 Currently Supported Sites:  
-[Asiachan](kpop.asiachan.com)  - Checks all previous and next pages from it's current location.  
-[Google Drive](drive.google.com) - Checks all folders and grabs the first 1000 images in each folder.  
-[Imgur](imgur.com) - Grabs all images in a gallery.  
+[Asiachan](https://kpop.asiachan.com/)  - Checks all previous and next pages from it's current location.  
+[Google Drive](https://drive.google.com/) - Checks all folders and grabs the first 1000 images in each folder.  
+[Imgur](https://imgur.com/) - Grabs all images in a gallery.  
 
 ## Installation
 
