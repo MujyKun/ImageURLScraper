@@ -48,7 +48,7 @@ list_of_links = [
     # When the dict is returned.
     [0, "https://kpop.asiachan.com/222040"],
     [1, 'https://imgur.com/a/mEUURoG'],
-    [2, 'https://bit.ly/36GWd2A'],
+    [2, 'https://bit.ly/xxxxxxx'],
     [3, 'http://imgur.com/a/jRcrF'],
     # [999, 'https://drive.google.com/drive/folders/1uWIObdgq65-TmBcA8oJIWOnbuuR_H5PB']
     # This google drive folder has a lot of media and will be skipped for testing purposes. but it can support
@@ -61,7 +61,7 @@ all_images = scraper.run(list_of_links)  # a dict with all the links of the imag
 pp.pprint(all_images)  
 ```
 
-#### Expected Output (dict)
+#### Sample Output (dict)
 ```
 {   1: [   'https://i.imgur.com/RUb6Xwl.jpg',
            ...],
