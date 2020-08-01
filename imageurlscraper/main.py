@@ -1,5 +1,7 @@
 import imageurlscraper
 import sys
+err = imageurlscraper.errorhandling
+sys.setrecursionlimit(15000)
 
 
 class Scraper:
@@ -8,19 +10,37 @@ class Scraper:
 
     def run(self, links):
         """Main Process"""
+        dic = self.check_type(links)
         for info in links:
-            member_id = info[0]
-            link = info[1]
-            try:
-                image_links = self.process_source(link)
-                for image in image_links:
-                    if member_id not in self.all_images:
-                        self.all_images[member_id] = [image]
-                    else:
-                        self.all_images[member_id].append(image)
-            except Exception as e:
-                pass
+            if dic:
+                member_links = links[info]
+                for member_link in member_links:
+                    self.add_source(info, member_link)
+            else:
+                member_id = info[0]
+                link = info[1]
+                self.add_source(member_id, link)
         return self.all_images
+
+    def add_source(self, member_id, link):
+        """Updates list of image links."""
+        image_links = self.process_source(link)
+        if image_links is not None:
+            for image in image_links:
+                if member_id not in self.all_images:
+                    self.all_images[member_id] = [image]
+                else:
+                    self.all_images[member_id].append(image)
+
+    @staticmethod
+    def check_type(obj):
+        obj_type = type(obj)
+        if obj_type is dict:
+            return True
+        elif obj_type is list:
+            return False
+        else:
+            raise err.WrongType(obj_type)
 
     @staticmethod
     def process_source(link):
@@ -39,18 +59,3 @@ class Scraper:
         """Transforms shortened links into their original link."""
         return imageurlscraper.pool.get_site_url(link)
 
-
-# Instead of going straight to a database, it should have the photo link to member id in a dict and then later moved.
-
-
-list_of_links = [
-    # [287, 'https://drive.google.com/drive/folders/1uWIObdgq65-TmBcA8oJIWOnbuuR_H5PB'],
-    [204, "https://kpop.asiachan.com/222040"],
-    [1, 'https://imgur.com/a/mEUURoG'],
-    [2, 'https://bit.ly/36GWd2A'],
-    [3, 'http://imgur.com/a/jRcrF'],
-    [4, "http://imgur.com/a/8GPIv"],
-    [5, "http://imgur.com/a/nU4oI"],
-    [6, "http://imgur.com/a/HwLwe"]
-]
-sys.setrecursionlimit(15000)

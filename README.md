@@ -1,8 +1,8 @@
-# ImageURlScraper
+# ImageURLScraper
 
 ImageURLScraper is a multi-site image scraper. It automatically detects which site the image is coming from and scrapes it. Only relevant images are scraped from the site and shortened links are automatically unshortened. In the case that you have many links that need to be processed, these links can be distinguished by IDs when requesting the image links.
 
-Currently Supported Sites:  
+**Currently Supported Sites:**  
 [Asiachan](https://kpop.asiachan.com/)  - Checks all previous and next pages from it's current location.  
 [Google Drive](https://drive.google.com/) - Checks all folders and grabs the first 1000 images in each folder.  
 [Imgur](https://imgur.com/) - Grabs all images in a gallery.  
@@ -11,7 +11,7 @@ Currently Supported Sites:
 
 In a terminal, type ``pip install imageurlscraper``.
 
-In order to scrape images from Google Drive, the credentials are needed.  
+In order to get images from Google Drive, the credentials are needed (the scraping process I had in place was too inefficient).  
 Steps to add Google Drive credentials:
 
 Go to https://console.developers.google.com/apis/dashboard and at the top click `+ ENABLE APIS AND SERVICES`.  
@@ -19,13 +19,9 @@ Next, search for `Google Drive API`, click it, and then click Enable.
 Select a project and then you'll be on a page with your project.  
 You will see a notice: "To use this API, you may need credentials. Click 'Create credentials' to get started.".  
 Go ahead and click `Create Credentials`.  
-You will be requested information on the type of credentials you need.  
-For the API, select `Google Drive API`, and select `Other UI` for where the API will be called from.  
-For the data you will be accessing, select Application data.  
-After that, create a service account in the 2nd field. Have the role as `project owner` and make sure the Key type is `JSON`.  
-Get your credentials and rename the JSON file to `credentials.JSON`
-Go to the project source (if you installed by pip, go to a terminal and type `pip show imageurlscraper`)  
-Put the `credentials.json` in the same folder as the `main.py`.
+Once you finish the process, you should be able to download a JSON file.  
+Get your credentials and rename the JSON file to `credentials.JSON`  
+Go to **YOUR** project source and put the `credentials.json` in the same folder as the file you are running.  
 
 
 
@@ -55,10 +51,32 @@ list_of_links = [
     # google drive links like these and will go through every folder in that folder.
 ]
 
-
 scraper = imageurlscraper.main.Scraper()
 all_images = scraper.run(list_of_links)  # a dict with all the links of the images.
 pp.pprint(all_images)  
+
+# Want to send in a dict instead of a list?
+# Dict Format is expected to be:
+dict_links = {
+    0: ["link1.com",
+        "link2.com",
+        "link3.com"
+        ],
+    1: [
+       "link1.com",
+       "link2.com",
+       "link3.com"
+    ],
+    2: [
+       "link1.com",
+       "link2.com",
+       "link3.com"
+    ]
+}
+all_images = scraper.run(dict_links)
+
+print(5)
+
 ```
 
 #### Sample Output (dict)

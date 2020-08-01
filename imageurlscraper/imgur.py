@@ -1,6 +1,8 @@
 import imageurlscraper
 from bs4 import BeautifulSoup as soup
 import json
+err = imageurlscraper.errorhandling
+verbose = err.verbose
 
 
 class MediaScraper:
@@ -27,6 +29,7 @@ class MediaScraper:
                     image_hash = image['hash']
                     image_url = self.base_url + image_hash + image_type
                     self.all_links.append(image_url)
-            except Exception as e:
-                print("{} is not supported by the imgur scraper. -- {}".format(link, e))
+            except IndexError:
+                if verbose:
+                    raise err.InvalidLink(link)
         return self.all_links

@@ -66,31 +66,25 @@ class AsiaChan:
             return "{}{}".format(base_url, self.current_image)
 
     def check_if_image(self, html, start_pos, counter):
-        try:
-            link = (html[start_pos:start_pos+counter])
-            if link[len(link)-1] == '"':
-                self.current_image = link[0:len(link)-1]
-            else:
-                self.check_if_image(html, start_pos, counter+1)
-        except Exception as e:
-            print(e)
+        link = (html[start_pos:start_pos+counter])
+        if link[len(link)-1] == '"':
+            self.current_image = link[0:len(link)-1]
+        else:
+            self.check_if_image(html, start_pos, counter+1)
 
     def check_if_post_number(self, html, end_pos, counter, mode): # mode at 1 = next, mode at 0 = previous
-        try:
-            if mode == 0:
-                perfect_sixth = (html[end_pos-counter:end_pos])
-                if perfect_sixth[0] == '/':
-                    self.post_number = perfect_sixth[1:end_pos]
-                else:
-                    self.check_if_post_number(html, end_pos, counter+1, 0)
-            if mode == 1:
-                perfect_sixth = (html[end_pos-counter:end_pos])
-                if perfect_sixth[0] == '/':
-                    self.post_number = perfect_sixth[1:end_pos]
-                else:
-                    self.check_if_post_number(html, end_pos, counter-1, 1)
-        except Exception as e:
-            print(e)
+        if mode == 0:
+            perfect_sixth = (html[end_pos-counter:end_pos])
+            if perfect_sixth[0] == '/':
+                self.post_number = perfect_sixth[1:end_pos]
+            else:
+                self.check_if_post_number(html, end_pos, counter+1, 0)
+        if mode == 1:
+            perfect_sixth = (html[end_pos-counter:end_pos])
+            if perfect_sixth[0] == '/':
+                self.post_number = perfect_sixth[1:end_pos]
+            else:
+                self.check_if_post_number(html, end_pos, counter-1, 1)
 
 
 """
