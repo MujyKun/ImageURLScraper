@@ -65,16 +65,19 @@ class DriveScraper:
         return self.all_links
 
     def get_folders(self, url):
-        url_id = self.get_id_from_folder(url)
-        image_ids = get_ids(url_id)
-        for image_id in image_ids:
-            folder_url = "https://drive.google.com/drive/folders/{}".format(image_id)
-            image_url = "https://drive.google.com/uc?export=view&id={}".format(image_id)
-            if self.check_if_folder(folder_url):
-                self.get_folders(folder_url)
-            else:
-                self.all_links.append(image_url)
-        return True
+        try:
+            url_id = self.get_id_from_folder(url)
+            image_ids = get_ids(url_id)
+            for image_id in image_ids:
+                folder_url = "https://drive.google.com/drive/folders/{}".format(image_id)
+                image_url = "https://drive.google.com/uc?export=view&id={}".format(image_id)
+                if self.check_if_folder(folder_url):
+                    self.get_folders(folder_url)
+                else:
+                    self.all_links.append(image_url)
+            return True
+        except FileNotFoundError:
+            raise err.CredentialsNeeded
 
     @staticmethod
     def get_id_from_folder(url):

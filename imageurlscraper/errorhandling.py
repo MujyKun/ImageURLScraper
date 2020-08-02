@@ -17,3 +17,9 @@ class StatusError(Exception):
     """Status Codes"""
     def __init__(self, link, status_code):
         super(StatusError, self).__init__("{} returned {} when connecting to it.".format(link, status_code))
+
+
+class CredentialsNeeded(Exception):
+    def __init__(self):
+        github_link = "https://github.com/MujyKun/ImageURLScraper#installation"
+        super(CredentialsNeeded, self).__init__("credentials.json was not found. Please refer to {}".format(github_link))
