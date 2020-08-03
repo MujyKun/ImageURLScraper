@@ -17,8 +17,7 @@ class Scraper:
                 for member_link in member_links:
                     self.add_source(info, member_link)
             else:
-                member_id = info[0]
-                link = info[1]
+                member_id, link = self.get_member_and_link(info)
                 self.add_source(member_id, link)
         return self.all_images
 
@@ -41,6 +40,13 @@ class Scraper:
             return False
         else:
             raise err.WrongType(obj_type)
+
+    @staticmethod
+    def get_member_and_link(info):
+        if type(info[0]) is int:
+            return info[0], info[1]
+        else:
+            return info[1], info[0]
 
     @staticmethod
     def process_source(link):
