@@ -82,7 +82,10 @@ class DriveScraper:
     @staticmethod
     def get_id_from_folder(url):
         loc = url.find("folders/")
-        return url[loc + 8:len(url)]
+        end_loc = url.find("?")
+        if end_loc == -1:
+            end_loc = len(url)
+        return url[loc + 8:end_loc]
 
 
 
