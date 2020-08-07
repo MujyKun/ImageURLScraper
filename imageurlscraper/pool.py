@@ -23,5 +23,5 @@ def get_site_url(url):
         return err.StatusError(url, r.status)
     else:
         if verbose:
-            print("ERROR: {} for {}").format(r.status, url)
+            print("ERROR: {} for {}".format(r.status, url))
         return None

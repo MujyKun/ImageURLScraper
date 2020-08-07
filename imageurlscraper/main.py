@@ -52,13 +52,14 @@ class Scraper:
     def process_source(link):
         """Checks which site the link comes from and processes it."""
         link = Scraper.get_main_link(link)
-        if 'kpop.asiachan.com' in link:
-            return imageurlscraper.asiachan.AsiaChan().get_all_image_links(link)
-        elif 'drive.google.com' in link:
-            return imageurlscraper.googledrive.DriveScraper().get_links(link)
-        elif 'imgur.com' in link:
-            return imageurlscraper.imgur.MediaScraper().start(link)
-        pass
+        if link is not None:
+            if 'kpop.asiachan.com' in link:
+                return imageurlscraper.asiachan.AsiaChan().get_all_image_links(link)
+            elif 'drive.google.com' in link:
+                return imageurlscraper.googledrive.DriveScraper().get_links(link)
+            elif 'imgur.com' in link:
+                return imageurlscraper.imgur.MediaScraper().start(link)
+            pass
 
     @staticmethod
     def get_main_link(link):
