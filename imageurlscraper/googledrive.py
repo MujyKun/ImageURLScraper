@@ -35,14 +35,19 @@ def get_drive_connection():
 
 
 def get_ids(folder_id):
-    drive_service = get_drive_connection()
-    q = "'{}'".format(folder_id)
-    q = "{} in parents".format(q)
-    response = drive_service.files().list(q=q,
-                                          spaces='',
-                                          fields='nextPageToken, files(id, name)',
-                                          pageSize=1000).execute()
-    return [file.get('id') for file in response.get('files', [])]
+    try:
+        drive_service = get_drive_connection()
+        q = "'{}'".format(folder_id)
+        q = "{} in parents".format(q)
+        response = drive_service.files().list(q=q,
+                                              spaces='',
+                                              fields='nextPageToken, files(id, name)',
+                                              pageSize=1000).execute()
+        return [file.get('id') for file in response.get('files', [])]
+    except Exception as e:
+        if err.verbose:
+            print("There was an error with a specific link. Folder ID: {} -{}".format(folder_id, e))
+        return []  # returning an empty list instead of None
 
 
 class DriveScraper:
