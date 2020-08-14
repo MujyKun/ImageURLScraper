@@ -32,7 +32,7 @@ class MediaScraper:
             except IndexError:
                 if verbose:
                     raise err.InvalidLink(link)
-            except json.decoder.JSONDecodeError:
+            except json.decoder.JSONDecodeError as e:
                 if verbose:
-                    print("{} should not be processed because it does not belong to this domain.".format(link))
+                    print("{} should not be processed because it does not belong to this domain. [Most Likely] - {}".format(link, e))
         return self.all_links
