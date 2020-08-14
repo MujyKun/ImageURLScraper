@@ -10,16 +10,21 @@ class Scraper:
 
     def run(self, links):
         """Main Process"""
-        dic = self.check_type(links)
-        for info in links:
-            if dic:
-                member_links = links[info]
-                for member_link in member_links:
-                    self.add_source(info, member_link)
-            else:
-                member_id, link = self.get_member_and_link(info)
-                self.add_source(member_id, link)
-        return self.all_images
+        try:
+            dic = self.check_type(links)
+            for info in links:
+                if dic:
+                    member_links = links[info]
+                    for member_link in member_links:
+                        self.add_source(info, member_link)
+                else:
+                    member_id, link = self.get_member_and_link(info)
+                    self.add_source(member_id, link)
+            return self.all_images
+        except Exception as e:
+            if err.verbose:
+                print("There was an error. Returning current list. -{}".format(e))
+            return self.all_images
 
     def add_source(self, member_id, link):
         """Updates list of image links."""
