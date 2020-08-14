@@ -56,15 +56,24 @@ class Scraper:
     @staticmethod
     def process_source(link):
         """Checks which site the link comes from and processes it."""
-        link = Scraper.get_main_link(link)
-        if link is not None:
-            if 'kpop.asiachan.com' in link:
-                return imageurlscraper.asiachan.AsiaChan().get_all_image_links(link)
-            elif 'drive.google.com' in link:
-                return imageurlscraper.googledrive.DriveScraper().get_links(link)
-            elif 'imgur.com' in link:
-                return imageurlscraper.imgur.MediaScraper().start(link)
-            pass
+        try:
+            link = Scraper.get_main_link(link)
+            if link is not None:
+                if 'kpop.asiachan.com' in link:
+                    return imageurlscraper.asiachan.AsiaChan().get_all_image_links(link)
+                elif 'drive.google.com' in link:
+                    return imageurlscraper.googledrive.DriveScraper().get_links(link)
+                elif 'imgur.com' in link:
+                    if 'gallery' in link:
+                        link = link.replace("gallery", 'a')
+                    if err.verbose:
+                        print("Added {}".format(link))
+                    return imageurlscraper.imgur.MediaScraper().start(link)
+                pass
+        except Exception as e:
+            if err.verbose:
+                print("Error at Process_Source for {} - {}".format(link, e))
+            return None
 
     @staticmethod
     def get_main_link(link):
