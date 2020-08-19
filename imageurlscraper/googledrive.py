@@ -34,24 +34,9 @@ def get_drive_connection():
     return drive_service
 
 
-def get_ids(folder_id):
-    try:
-        drive_service = get_drive_connection()
-        q = "'{}'".format(folder_id)
-        q = "{} in parents".format(q)
-        response = drive_service.files().list(q=q,
-                                              spaces='',
-                                              fields='nextPageToken, files(id, name)',
-                                              pageSize=1000).execute()
-        return [file.get('id') for file in response.get('files', [])]
-    except Exception as e:
-        if err.verbose:
-            print("There was an error with a specific link. Folder ID: {} -{}".format(folder_id, e))
-        return []  # returning an empty list instead of None
-
-
 class DriveScraper:
-    def __init__(self):
+    def __init__(self, drive_service = None):
+        self.drive_service = drive_service or get_drive_connection()
         self.image_already_exists = []
         self.folder_already_checked = []
         self.all_links = []
@@ -72,7 +57,7 @@ class DriveScraper:
     def get_folders(self, url):
         try:
             url_id = self.get_id_from_folder(url)
-            image_ids = get_ids(url_id)
+            image_ids = self.get_ids(url_id)
             for image_id in image_ids:
                 folder_url = "https://drive.google.com/drive/folders/{}".format(image_id)
                 image_url = "https://drive.google.com/uc?export=view&id={}".format(image_id)
@@ -91,6 +76,20 @@ class DriveScraper:
         if end_loc == -1:
             end_loc = len(url)
         return url[loc + 8:end_loc]
+
+    def get_ids(self, folder_id):
+        try:
+            q = "'{}'".format(folder_id)
+            q = "{} in parents".format(q)
+            response = self.drive_service.files().list(q=q,
+                                                  spaces='',
+                                                  fields='nextPageToken, files(id, name)',
+                                                  pageSize=1000).execute()
+            return [file.get('id') for file in response.get('files', [])]
+        except Exception as e:
+            if err.verbose:
+                print("There was an error with a specific link. Folder ID: {} -{}".format(folder_id, e))
+            return []  # returning an empty list instead of None
 
 
 
