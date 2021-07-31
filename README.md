@@ -1,5 +1,9 @@
 # ImageURLScraper
 
+
+## This project is no longer maintaned. This was one of my first projects and may still work, but it's inefficient. 
+
+
 ImageURLScraper is a multi-site image scraper. It automatically detects which site the image is coming from and scrapes it. Only relevant images are scraped from the site and shortened links are automatically unshortened. In the case that you have many links that need to be processed, these links can be distinguished by IDs when requesting the image links.
 
 **Currently Supported Sites:**  
