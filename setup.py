@@ -18,7 +18,7 @@ setup(
     url='https://github.com/MujyKun/ImageURLScraper/',
     license='MIT License',
     author='MujyKun',
-    author_email='thugystory1@gmail.com',
+    author_email='mujy@irenebot.com',
     description='Image Scraper for Google Drive, Imgur, AsiaChan, and more.',
     classifiers=[
         "Development Status :: 5 - Production/Stable",
